@@ -1,147 +1,156 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Oriental Pod - Loja de Pods Premium</title>
-    <link rel="stylesheet" href="styles.css">
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            background-color: #f4f4f4;
-        }
-        header {
-            background-color: #333;
-            color: #fff;
-            padding: 10px 0;
-            text-align: center;
-        }
-        .navbar {
-            display: flex;
-            justify-content: center;
-            gap: 30px;
-            list-style: none;
-            padding: 0;
-        }
-        .navbar li {
-            display: inline;
-        }
-        .navbar a {
-            color: #fff;
-            text-decoration: none;
-            font-size: 18px;
-        }
-        .navbar a:hover {
-            color: #d3a233;
-        }
-        .hero {
-            background-image: url('https://via.placeholder.com/1600x600.png?text=Oriental+Pod');
-            background-size: cover;
-            text-align: center;
-            color: white;
-            padding: 100px 20px;
-        }
-        .hero h1 {
-            font-size: 3em;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 1.2em;
-        }
-        .products {
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            padding: 40px 10px;
-        }
-        .product-card {
-            background-color: #fff;
-            width: 300px;
-            padding: 20px;
-            margin: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-        .product-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-radius: 8px;
-        }
-        .product-card h3 {
-            margin-top: 20px;
-            font-size: 1.5em;
-        }
-        .product-card p {
-            font-size: 1.2em;
-            color: #777;
-        }
-        .cta-button {
-            background-color: #d3a233;
-            color: #fff;
-            padding: 15px 30px;
-            text-decoration: none;
-            font-size: 1.2em;
-            border-radius: 5px;
-            transition: background-color 0.3s ease;
-        }
-        .cta-button:hover {
-            background-color: #b88c1a;
-        }
-        footer {
-            background-color: #333;
-            color: #fff;
-            padding: 20px;
-            text-align: center;
-        }
-    </style>
-</head>
-<body>
+<!-- Adicione ao <head> -->
+<style>
+/* ... (mantenha todo seu CSS atual acima) ... */
+#cart-modal, #product-modal {
+    display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: rgba(0,0,0,0.5); justify-content: center; align-items: center; z-index: 1000;
+}
+.modal-content {
+    background: #fff; padding: 30px; border-radius: 10px; position: relative; min-width: 300px;
+}
+.close-btn { position: absolute; top: 10px; right: 20px; cursor: pointer; font-size: 1.5em; }
+#cart-btn { position: fixed; top: 20px; right: 20px; background: #d3a233; color: #fff; border: none; padding: 15px; border-radius: 50%; font-size: 1.3em; z-index: 1100; cursor:pointer;}
+#search-bar { width: 100%; max-width: 400px; margin: 20px auto; display: block; padding: 10px;}
+</style>
 
-<header>
-    <h1>Oriental Pod</h1>
-    <ul class="navbar">
-        <li><a href="#">Início</a></li>
-        <li><a href="#">Produtos</a></li>
-        <li><a href="#">Sobre Nós</a></li>
-        <li><a href="#">Contato</a></li>
-    </ul>
-</header>
+<!-- Dentro do <body>, logo após <header> -->
+<button id="cart-btn" title="Ver carrinho">🛒</button>
+<input type="text" id="search-bar" placeholder="Buscar produto...">
 
-<section class="hero">
-    <h1>Descubra a experiência única de um Pod Premium</h1>
-    <p>Inovação e sofisticação em cada detalhe. Encontre o pod perfeito para você.</p>
-    <a href="#products" class="cta-button">Veja nossos Produtos</a>
+<!-- ... resto do conteúdo ... -->
+
+<!-- Modal Carrinho -->
+<div id="cart-modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="toggleCartModal(false)">&times;</span>
+    <h2>Carrinho</h2>
+    <div id="cart-items"></div>
+    <p id="cart-total"></p>
+    <button onclick="enviarPedidoWhatsApp()">Enviar pedido via WhatsApp</button>
+  </div>
+</div>
+
+<!-- Modal Detalhe Produto -->
+<div id="product-modal">
+  <div class="modal-content">
+    <span class="close-btn" onclick="toggleProductModal(false)">&times;</span>
+    <div id="product-detail"></div>
+  </div>
+</div>
+
+<!-- Seção Contato -->
+<section id="contato" style="padding:40px 10px;">
+  <h2>Contato</h2>
+  <form id="contact-form">
+    <label>Nome:<br><input type="text" name="nome" required></label><br>
+    <label>E-mail:<br><input type="email" name="email" required></label><br>
+    <label>Mensagem:<br><textarea name="mensagem" required></textarea></label><br>
+    <button type="submit">Enviar</button>
+  </form>
 </section>
 
-<section id="products" class="products">
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300.png?text=Pod+1" alt="Pod 1">
-        <h3>Pod Relax</h3>
-        <p>Um pod ideal para momentos de relaxamento e meditação.</p>
-        <a href="#" class="cta-button">Comprar</a>
-    </div>
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300.png?text=Pod+2" alt="Pod 2">
-        <h3>Pod Energia</h3>
-        <p>Recarregue suas energias com este pod energizante.</p>
-        <a href="#" class="cta-button">Comprar</a>
-    </div>
-    <div class="product-card">
-        <img src="https://via.placeholder.com/300.png?text=Pod+3" alt="Pod 3">
-        <h3>Pod Zen</h3>
-        <p>Para quem busca paz e tranquilidade durante o dia.</p>
-        <a href="#" class="cta-button">Comprar</a>
-    </div>
-</section>
+<script>
+// Produtos exemplo (poderia vir de um backend futuramente)
+const produtos = [
+  {id:1, nome:"Pod Relax", descricao:"Um pod ideal para momentos de relaxamento e meditação.", imagem:"https://via.placeholder.com/300.png?text=Pod+1", preco:75 },
+  {id:2, nome:"Pod Energia", descricao:"Recarregue suas energias com este pod energizante.", imagem:"https://via.placeholder.com/300.png?text=Pod+2", preco:80 },
+  {id:3, nome:"Pod Zen", descricao:"Para quem busca paz e tranquilidade durante o dia.", imagem:"https://via.placeholder.com/300.png?text=Pod+3", preco:85 },
+];
+let carrinho = [];
 
-<footer>
-    <p>&copy; 2025 Oriental Pod - Todos os direitos reservados</p>
-</footer>
+// Renderizar produtos
+function renderProdutos(filtro="") {
+  const sec = document.querySelector('.products');
+  sec.innerHTML = "";
+  produtos.filter(prod => prod.nome.toLowerCase().includes(filtro.toLowerCase()))
+    .forEach(prod => {
+      sec.innerHTML += `
+      <div class="product-card">
+        <img src="${prod.imagem}" alt="${prod.nome}" onclick="showProductDetail(${prod.id})">
+        <h3>${prod.nome}</h3>
+        <p>${prod.descricao}</p>
+        <p>R$ ${prod.preco}</p>
+        <button class="cta-button" onclick="addToCart(${prod.id})">Adicionar ao Carrinho</button>
+      </div>`;
+    });
+}
+renderProdutos();
 
-</body>
-</html>
+// Carrinho
+function addToCart(id) {
+  const prod = produtos.find(p=>p.id==id);
+  carrinho.push(prod);
+  alert(`${prod.nome} adicionado ao carrinho!`);
+}
+function toggleCartModal(show=true){
+  document.getElementById('cart-modal').style.display = show ? 'flex':'none';
+  if (show) renderCart();
+}
+function renderCart(){
+  let html = "";
+  let total = 0;
+  carrinho.forEach((prod, i) => {
+    html += `<div>
+      <img src="${prod.imagem}" alt="${prod.nome}" width="50"> ${prod.nome} - R$${prod.preco}
+      <button onclick="removeFromCart(${i})">Remover</button>
+    </div>`;
+    total += prod.preco;
+  });
+  document.getElementById('cart-items').innerHTML = html || "Seu carrinho está vazio.";
+  document.getElementById('cart-total').textContent = "Total: R$"+total;
+}
+function removeFromCart(idx){
+  carrinho.splice(idx,1);
+  renderCart();
+}
+
+// Detalhes do produto
+function showProductDetail(id){
+  const prod = produtos.find(p=>p.id==id);
+  document.getElementById('product-detail').innerHTML = `
+    <img src="${prod.imagem}" alt="${prod.nome}" style="width:100%;">
+    <h2>${prod.nome}</h2>
+    <p>${prod.descricao}</p>
+    <p>R$ ${prod.preco}</p>
+    <button onclick="addToCart(${prod.id})">Adicionar ao Carrinho</button>
+  `;
+  toggleProductModal(true);
+}
+function toggleProductModal(show=true){
+  document.getElementById('product-modal').style.display = show ? 'flex':'none';
+}
+
+// Busca/Filtro de produtos
+document.getElementById('search-bar').addEventListener('input', e => {
+  renderProdutos(e.target.value);
+});
+
+// Carrinho botão
+document.getElementById('cart-btn').onclick = () => toggleCartModal(true);
+
+// Rolagem suave
+document.querySelectorAll('.navbar a').forEach(a=>{
+  a.onclick = function(e){
+    const href = a.getAttribute('href');
+    if(href.startsWith("#") && document.querySelector(href)){
+      e.preventDefault();
+      document.querySelector(href).scrollIntoView({behavior:'smooth'});
+    }
+  }
+});
+
+// Formulário de contato
+document.getElementById('contact-form').onsubmit = function(e){
+  e.preventDefault();
+  const nome = this.nome.value, email = this.email.value, msg = this.mensagem.value;
+  window.location=`mailto:suporte@orientalpod.com?subject=Contato%20de%20${nome}&body=Email:%20${email}%0A${msg}`;
+};
+
+// WhatsApp pedido
+function enviarPedidoWhatsApp(){
+  let texto = "Olá! Gostaria de pedir: ";
+  carrinho.forEach(p=>texto += `\n- ${p.nome} (R$${p.preco})`);
+  texto += `\nTotal: R$${carrinho.reduce((acc,p)=>acc+p.preco,0)}`;
+  window.open(`https://wa.me/SEUNUMEROAQUI?text=${encodeURIComponent(texto)}`);
+}
+</script>
